@@ -1,0 +1,22 @@
+// OPCIÓN COMPOSICION
+import semillasPorComposicion.*
+
+describe "Plantas por composicion" {
+
+	const unaMenta = new Planta(anioDeObtencion = 2015, altura = 1, especie = menta)
+	const unaQuinoa = new Planta(anioDeObtencion = 2010, altura = 1, especie = new Quinoa(horasDeSolQueTolera = 12))
+
+	test "Menta" {
+		assert.that(unaMenta.daSemillas())
+		assert.equals(3, unaMenta.espacio())
+		assert.notThat(unaMenta.esFuerte())
+	}
+
+	test "Quinoa" {
+		assert.that(unaQuinoa.daSemillas())
+		assert.equals(0.5, unaQuinoa.espacio())
+		assert.that(unaQuinoa.esFuerte())
+	}
+
+}
+
