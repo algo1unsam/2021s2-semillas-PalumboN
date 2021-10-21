@@ -1,20 +1,10 @@
 import semillas.*
 
-object creadorDeParcelas {
-
-	method parcelaLlena() {
-		const unaParcela = new Parcela(ancho = 20, largo = 1, horasDeSol = 8)
-		4.times({ i => unaParcela.plantar(new Soja(anioDeObtencion = 2010, altura = 2))})
-		return unaParcela
-	}
-
-}
-
 describe "Plantas" {
 
 	const unaMenta = new Menta(anioDeObtencion = 2015, altura = 1)
 	const unaQuinoa = new Quinoa(horasDeSolQueTolera = 12, anioDeObtencion = 2010, altura = 1)
-	const unaParcela = new Parcela(ancho = 20, largo = 1, horasDeSol = 8)
+	const unaParcela = new ParcelaEcologica(ancho = 20, largo = 1, horasDeSol = 8)
 
 	method initialize() {
 		4.times({ i => unaParcela.plantar(new Soja(anioDeObtencion = 2010, altura = 2))})
@@ -34,10 +24,21 @@ describe "Plantas" {
 
 	test "Parcela" {
 		assert.equals(20, unaParcela.superficie())
-		assert.equals(4, unaParcela.cantidadMaxima())
+		assert.equals(4, unaParcela.cantidadMaximaQueSoporta())
 		assert.notThat(unaParcela.tieneComplicaciones())
 		assert.throwsExceptionWithMessage("La parcella está llena", { unaParcela.plantar(unaMenta)})
 	}
+	
+	test "Parcela ideal" {
+		assert.that(unaMenta.esIdeal(unaParcela))
+		assert.notThat(unaQuinoa.esIdeal(unaParcela))
+	}
+	
+	test "Se asocia bien" {
+		assert.that(unaParcela.seAsociaBien(unaMenta))
+	}
+	
+	// TODO: Testear INTA
 
 }
 
